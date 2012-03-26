@@ -32,7 +32,7 @@ public class Translator {
 		}			
 				
 		case 90: {			
-			return english? "E": "Ö"; 
+			return english? "E": "Ö"; //East is to the right on a map!
 		}
 
 		case 180: {
@@ -40,7 +40,7 @@ public class Translator {
 		}
 									
 		case 270: {
-			return english? "W": "V";//amerika åt vänster	
+			return english? "W": "V";//West is to the left on a map!
 		}
 		default: return null;		
 	}
