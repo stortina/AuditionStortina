@@ -163,9 +163,9 @@ public class RobotTest {
 	    		Robot robot = new Robot(false, roomSquare);
 	    		Assert.assertEquals(0, robot.getCurrentRotationInDegrees()% Robot.FULL_REVOLUTION);
 	    		
-	    		java.awt.Point coordinates = robot.calculateNewPosition(robot.getCurrentRotationInDegrees());
+	    		java.awt.Point coordinates = robot.calculateNewPosition();
 	    		
-	    		Assert.assertEquals( coordinates.y,  robot.getCurrentPosition().y + 1*Robot.MONITOR_YAXIS_TWIST );
+	    		Assert.assertEquals( coordinates.y,  (robot.getCurrentPosition().y + 1 * Robot.MONITOR_YAXIS_TWIST)  );
 
 	    }
     
@@ -174,9 +174,10 @@ public class RobotTest {
 	    		
 	    		Robot robot = new Robot(true, roomCircle);
 	    		Assert.assertEquals(0, robot.getCurrentRotationInDegrees()% Robot.FULL_REVOLUTION);
-	    		int halfRound = Direction.RIGHT.getDegrees()*2;
-	    		java.awt.Point coordinates = robot.calculateNewPosition(halfRound);
-	    		Assert.assertEquals(coordinates.y, robot.getCurrentPosition().y + 1*Robot.MONITOR_YAXIS_TWIST );
+	    		robot.executeOrders("HH");
+	    		java.awt.Point coordinates = robot.calculateNewPosition();
+	    		Assert.assertEquals(coordinates.y, ( robot.getCurrentPosition().y - 1 * Robot.MONITOR_YAXIS_TWIST)  );
+	    		Assert.assertEquals(coordinates.x, robot.getCurrentPosition().x);
 	    	
 	    }
 	    

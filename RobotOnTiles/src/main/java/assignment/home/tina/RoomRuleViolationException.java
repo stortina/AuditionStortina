@@ -7,7 +7,7 @@ public class RoomRuleViolationException extends Exception {
         }
 
         /**
-         * Constructs an {@code IOException} with the specified detail message.
+         * Constructs an {@code Exception} with the specified detail message.
          *
          * @param message
          *        The detail message (which is saved for later retrieval

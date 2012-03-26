@@ -3,7 +3,13 @@ package assignment.home.tina;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.Point;
 
+
+/**
+ * @author stortina
+ *
+ */
 public class Robot {
 	private final static Logger LOG = LoggerFactory.getLogger(Robot.class .getSimpleName());
 
@@ -14,8 +20,7 @@ public class Robot {
 	
 	public Room room;
 	private boolean english;
-	private int currentX_position;
-	private int currentY_position;
+	private java.awt.Point currentPosition;
 	private int currentRotationInDegrees;
 	private int damageLevel;
 
@@ -23,14 +28,12 @@ public class Robot {
 	public Robot(boolean useEnglish, Room room){
 		
 		this.english = useEnglish;
-		this.currentX_position = room.getStartPosition().x;
-		this.currentY_position= room.getStartPosition().y;
+		this.currentPosition = room.getStartPosition();
 		this.currentRotationInDegrees = FULL_REVOLUTION;
 		this.damageLevel = 0;
 		
 		this.room = room;
-		LOG.info("Robot constructor {},  {}", this.currentX_position , this.currentY_position);
-		LOG.trace("awt.point coordinates x,y: {}, {}", this.getCurrentPosition().x , this.getCurrentPosition().y);
+		LOG.info("Robot constructor {},  {}", this.currentPosition.x , this.currentPosition.y);
 	}
 	
 	
@@ -79,30 +82,32 @@ public class Robot {
 
 	}
 	
-	public java.awt.Point calculateNewPosition(int currentRotationInDegrees){
+	public java.awt.Point calculateNewPosition(){
 		
 		LOG.info("Calculating new position.");
-		java.awt.Point calculatedPoint = (java.awt.Point)this.getCurrentPosition().clone();	
+		
+		//assigning a value to make compiler happy:
+		java.awt.Point calculatedPoint = new Point();
 
 		switch( getCurrentRotationInDegrees()) {
 		
 			case 0: {
-				calculatedPoint = new java.awt.Point(this.currentX_position, this.currentY_position + (1 * MONITOR_YAXIS_TWIST) );
+				calculatedPoint = new java.awt.Point(this.currentPosition.x, this.currentPosition.y + (1 * MONITOR_YAXIS_TWIST) );
 				break;
 			}			
 					
 			case 90: {
-				calculatedPoint = new java.awt.Point(this.currentX_position + 1, this.currentY_position);
+				calculatedPoint = new java.awt.Point(this.currentPosition.x + 1, this.currentPosition.y);
 				break;
 			}
 	
 			case 180: {
-				calculatedPoint = new java.awt.Point(this.currentX_position, this.currentY_position -(1 * MONITOR_YAXIS_TWIST) );
+				calculatedPoint = new java.awt.Point(this.currentPosition.x, this.currentPosition.y -(1 * MONITOR_YAXIS_TWIST) );
 				break;
 			}
 										
 			case 270: {
-				calculatedPoint = new java.awt.Point(this.currentX_position-1, this.currentY_position); 
+				calculatedPoint = new java.awt.Point(this.currentPosition.x - 1, this.currentPosition.y); 
 				break;
 					
 			}
@@ -114,7 +119,7 @@ public class Robot {
 	
 	protected boolean settleNewPosition(){//throws outsideRoomException
 		
-		java.awt.Point calculatedPoint = this.calculateNewPosition(this.getCurrentRotationInDegrees());
+		java.awt.Point calculatedPoint = this.calculateNewPosition();
 		
 		//CHECK FIRST IF ITS VIOLATING WALL RULES
 		boolean roomContainsPosition = this.room.contains(calculatedPoint);
@@ -122,9 +127,8 @@ public class Robot {
 		if (roomContainsPosition){
 			LOG.info("settling point.x and point.y to {},{} ", calculatedPoint.x, calculatedPoint.y);
 
-			this.currentX_position = calculatedPoint.x;
-			this.currentY_position = calculatedPoint.y;
-			
+			this.currentPosition = calculatedPoint;
+
 			return true;
 		}
 		else{
@@ -179,7 +183,7 @@ public class Robot {
 
 	public java.awt.Point getCurrentPosition(){
 		
-		return new java.awt.Point(this.currentX_position, this.currentY_position);
+		return this.currentPosition;
 	}
 
 

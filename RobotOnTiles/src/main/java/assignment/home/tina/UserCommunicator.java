@@ -22,19 +22,6 @@ public static String getUsersInput(String question){
     return answer;
 }
 
-public static String waitForInput(String waitMessage){
-	Scanner scanner = new Scanner (System.in);
-	 System.out.println(waitMessage);
-	 String input = scanner.nextLine();
-	
-	 if (input.equalsIgnoreCase("EXIT")) {
-		 exitProgram();
-	 }
-	 scanner = null;
-	 return input;
-
-}
-
 public static void exitProgram(String reason){
     System.out.println(reason + " End of program.");
     System.exit(0);

@@ -4,9 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import extras.home.tina.UserInfo;
+import java.awt.Point;
 
-//import java.awt.Point;
 
+/**
+ * @author stortina
+ *
+ */
 public class RoomRectangular implements Room{
 
 	private final static Logger LOG = LoggerFactory.getLogger(RoomRectangular.class .getSimpleName());
@@ -34,7 +38,7 @@ public class RoomRectangular implements Room{
 			this.tilesXdirection = numberOfTilesX;
 			this.tilesYdirection = numberOfTilesY;	
 			
-			startpos = new java.awt.Point(startPositionX, startPositionY);
+			startpos = new Point(startPositionX, startPositionY);
 			
 			if (numberOfTilesX * tileSideLength > maxWidth || numberOfTilesY * tileSideLength > maxHeight){
 				throw new RoomRuleViolationException(Room.MSG_TOO_MANY_TILES);

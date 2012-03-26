@@ -3,6 +3,11 @@ package assignment.home.tina;
 
 //import extras.home.tina.FrameWithTiles;
 
+
+/**
+ * @author stortina
+ *
+ */
 public class StartProgram {
 	
 	public final static int DEFAULT_TILES_X = 5;
@@ -26,12 +31,16 @@ public class StartProgram {
 		
 	}
 	
-	public static void takeOrders(Robot robot){
+	public static void receiveOrders(Robot robot){
+		String commands = "";
 		
-		while(true){
-		String commands= UserCommunicator.waitForInput("Enter commmands! (Or type EXIT to end program.)");
-		robot.executeOrders(commands);//f.ex "HGHGGHGHG" , "RRFLFFLRF"	
+		while(!commands.trim().equalsIgnoreCase("EXIT")){
+			
+			robot.executeOrders(commands);//f.ex "HGHGGHGHG" , "RRFLFFLRF"	
+			commands= UserCommunicator.getUsersInput("Enter commmands! (Or type EXIT to end program.)");	
 		}
+		
+		UserCommunicator.exitProgram();
 	}
 	
 	public static void main (String [] args){
@@ -50,7 +59,7 @@ public class StartProgram {
 		System.out.println("Default configuration is as follows:");
 		System.out.print ("Room will be: " + "Rectangular.");
 		System.out.println ("with the dimensions:"  + DEFAULT_TILES_X +" x " + DEFAULT_TILES_Y);
-		System.out.println ("and start position x, y: "  + startPoint.x +" x " + startPoint.y);
+		System.out.println ("and start position x, y: "  + startPoint.x +" , " + startPoint.y);
 		
 		boolean change = UserCommunicator.askUserIf("Would you like to change these configuarations? Y/N");
 		
@@ -106,16 +115,14 @@ public class StartProgram {
 				 room = new RoomCircular(tilesRadius, startPoint.x, startPoint.y, adjustMaxSizeToScreen);
 				 rob1 = new Robot(useEnglish, room);
 				 StartProgram.printRobotIsReadyMessage(rob1, useEnglish);
-				 StartProgram.takeOrders(rob1);
-				 
-				 
+				 StartProgram.receiveOrders(rob1); 
 			 }
 			 
 			 else {
 				 room = new RoomRectangular (tilesX, tilesY, startPoint.x, startPoint.y, adjustMaxSizeToScreen);
 				 rob1 = new Robot(useEnglish, room);
 				 StartProgram.printRobotIsReadyMessage(rob1, useEnglish);
-				 StartProgram.takeOrders(rob1);
+				 StartProgram.receiveOrders(rob1);
 			 }
 
 		} catch (RoomRuleViolationException e) {
@@ -127,7 +134,7 @@ public class StartProgram {
 				room = new RoomRectangular(DEFAULT_TILES_X, DEFAULT_TILES_Y, DEFAULT_STARTPOINT.x, DEFAULT_STARTPOINT.y ,adjustMaxSizeToScreen);
 				rob1 = new Robot(useEnglish, room);
 				 StartProgram.printRobotIsReadyMessage(rob1, useEnglish);
-				 StartProgram.takeOrders(rob1);
+				 StartProgram.receiveOrders(rob1);
 			} 
 			catch (Exception e2) {
 				UserCommunicator.exitProgram("Program error!");
