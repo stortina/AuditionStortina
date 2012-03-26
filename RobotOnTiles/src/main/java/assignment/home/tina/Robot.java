@@ -68,11 +68,17 @@ public class Robot {
 			}//switch
 	
 		}//for
-		LOG.info("Orders executed! Compass direction is " + 
-				Translator.getDirectionAsCompass(this.getCurrentRotationInDegrees(), this.english) + 
-				". New position of x,y, direction: {}, {}" , this.getCurrentPosition().x, this.getCurrentPosition().y  );
+		if(!commands.isEmpty()){
+			System.out.println("Orders executed!");
+			giveReport();
+		}
 	}
 	
+	public void giveReport(){
+		System.out.println("Compass direction is " + 
+				Translator.getDirectionAsCompass(this.getCurrentRotationInDegrees(), this.english) + 
+				". New position x,y: " + this.getCurrentPosition().x +" ," + this.getCurrentPosition().y  );
+	}
 	
 	protected void turn(Direction direction){
 	
